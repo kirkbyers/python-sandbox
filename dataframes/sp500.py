@@ -10,6 +10,7 @@ def build_sp500_df():
     main_df = pd.DataFrame()
 
     for count, ticker in enumerate(tickers):
+        #Try, some tickers are invalid
         try:
             df = pd.read_csv('data/{}.csv'.format(ticker))
             df.set_index('Date', inplace=True)
@@ -29,3 +30,4 @@ def build_sp500_df():
 
     print(main_df.head())
     main_df.to_csv('sp500_joined_closes.csv')
+    return build_sp500_df

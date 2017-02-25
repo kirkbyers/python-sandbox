@@ -5,6 +5,7 @@ import pandas as pd
 import numpy as np
 
 def plot_sp500_corr():
+    '''Plots correlation spn500 from CSV in root'''
     style.use('ggplot')
 
     df = pd.read_csv('sp500_joined_closes.csv')
@@ -16,6 +17,7 @@ def plot_sp500_corr():
     fig = plt.figure()
     ax = fig.add_subplot(1,1,1)
 
+    # suggested formating for correlation
     heatmap = ax.pcolor(data, cmap=plt.cm.RdYlGn)
     fig.colorbar(heatmap)
     ax.set_xticks(np.arange(data.shape[0]) + 0.5, minor=False)
