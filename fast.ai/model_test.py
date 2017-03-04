@@ -34,9 +34,9 @@ idx = [char_indices[c] for c in training_text]
 vocab_size = len(chars)
 n_fac = 24
 #charater chucks
-cs = 20
+cs = 40
 bs = 64
-n_hidden = 256
+n_hidden = 512
 
 model = Sequential([
                 Embedding(vocab_size, n_fac, input_length=cs),
@@ -66,5 +66,5 @@ def get_next_x(inp, predict_length):
         return result
 
 seed_text = 'professor had been stricken whilst returning from the Newport boat; falling suddenly, as witnesses said, after having been jostled by'
-print(get_next_x(seed_text, 1000))
+print(get_next_x(seed_text, 5000))
 

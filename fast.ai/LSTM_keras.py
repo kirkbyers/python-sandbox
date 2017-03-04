@@ -1,6 +1,8 @@
 from theano.sandbox import cuda
 cuda.use('gpu1')
 
+from pathlib import Path
+
 import numpy as np
 from numpy.random import choice
 
@@ -37,9 +39,9 @@ idx = [char_indices[c] for c in training_text]
 vocab_size = len(chars)
 n_fac = 24
 #charater chucks
-cs = 20
+cs = 40
 bs = 64
-n_hidden = 256
+n_hidden = 512
 
 sentences = []
 next_chars = []
@@ -62,9 +64,15 @@ model = Sequential([
 
 model.compile(loss='sparse_categorical_crossentropy', optimizer=Adam())
 
-model.fit(sentences, np.expand_dims(next_chars, -1), batch_size=bs, nb_epoch=1)
+path_to_wgts = Path('fast_ai.h5')
+if path_to_wgts.is_file():
+	model.load_weights('fast_ai.h5')
+else:
+	f = open('fast_ai.h5', 'w+')
 
-model.save_weights('fast_ai.h5')
+for i in range(11):
+	model.fit(sentences, np.expand_dims(next_chars, -1), batch_size=bs, nb_epoch=1)
+	model.save_weights('fast_ai.h5')
 
 def get_next (inp):
 	idxs = np.array([char_indices[c] for c in inp[-cs:]])[np.newaxis,:]
